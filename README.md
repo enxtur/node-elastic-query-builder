@@ -12,8 +12,6 @@ npm install --save elastic-query-builder
 ## Example
 
 ```js
-"use strict";
-
 'use strict'
 import QueryBuilder from 'elastic-query-builder'
 
