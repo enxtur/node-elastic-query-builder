@@ -1,0 +1,29 @@
+{
+  "name": "elastic-query-builder",
+  "version": "1.0.0",
+  "description": "Very simple search query builder for private purpose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enxtur/node-elastic-query-builder.git"
+  },
+  "keywords": [
+    "elastic",
+    "simple",
+    "query-builder"
+  ],
+  "author": {
+    "name": "Enkhtur Enkhbat"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/enxtur/node-elastic-query-builder/issues"
+  },
+  "homepage": "https://github.com/enxtur/node-elastic-query-builder#readme",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
+}

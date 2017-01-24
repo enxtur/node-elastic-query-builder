@@ -1,0 +1,11 @@
+{
+  "undef": true,
+  "unused": true,
+  "asi": true,
+  "node": true,
+  "predef": [ "describe", "it", "before"],
+  "multistr": true,
+  "esnext": true,
+  "varstmt": true
+}
+
