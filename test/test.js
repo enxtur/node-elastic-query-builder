@@ -1,5 +1,5 @@
 import assert from 'assert'
-import QueryBuilder from '../'
+import QueryBuilder from '../src/query_builder'
 describe('QueryBuilder', function () {
   let qb = new QueryBuilder('myindex', 'mytype')
   qb.addMustTerm('user_id', 1)
