@@ -1,5 +1,5 @@
 import { object } from 'underscore'
-export class QueryBuilder {
+export default class QueryBuilder {
   constructor (index, type) {
     this.index = index
     this.type = type
