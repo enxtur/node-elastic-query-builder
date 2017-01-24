@@ -4,6 +4,9 @@
   "description": "Very simple search query builder for private purpose",
   "main": "lib/query_builder.js",
   "scripts": {
+    "start": "babel -s inline -d lib -w src",
+    "build": "babel -s inline -d lib src",
+    "prepublish": "npm test && npm run build",
     "test": "./node_modules/mocha/bin/mocha --compilers js:babel-core/register"
   },
   "repository": {
