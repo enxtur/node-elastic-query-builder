@@ -1,5 +1,5 @@
 # node-elastic-query-builder
-Very simple search query builder for private purpose
+Very simple search query builder for private purpose. But feel free to contribute & issues
 
 ## Install
 
