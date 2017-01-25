@@ -6,7 +6,7 @@ describe('QueryBuilder', function () {
   qb.addMustNotTerm('deleted', true)
   qb.addShouldTerm('type', 'sample-type')
   qb.addMustQueryString(['title', 'desc'], '*hello*')
-  qb.addTermsAgg('category_count', 'category_id')
+  qb.addTermsAgg('category_count', 'category_id', {size: 100})
   qb.setLimit(10)
   qb.setOffset(0)
   qb.addSort('id', 'desc')
@@ -32,7 +32,7 @@ describe('QueryBuilder', function () {
                     }
                   }, {
                     query_string: {
-                      fields: [ title, desc ]
+                      fields: [title, desc]
                     }
                   }],
                   must_not: [{
@@ -52,7 +52,8 @@ describe('QueryBuilder', function () {
           aggs: {
             category_count: {
               terms: {
-                field
+                field,
+                size
               }
             }
           }
@@ -67,6 +68,7 @@ describe('QueryBuilder', function () {
       assert(deleted)
       assert.equal(filterType, 'sample-type')
       assert.equal(field, 'category_id')
+      assert.equal(size, 100)
     }, Error)
   })
 })

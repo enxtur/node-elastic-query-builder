@@ -14,17 +14,19 @@ export default class QueryBuilder {
     }
     this.limit = 10
     this.offset = 0
+    this.page = 0
     this.sort = []
   }
 
   build () {
+    let from = this.offset ? this.offset : (this.page * this.limit)
     return {
       index: this.index,
       type: this.type,
       body: {
         sort: this.sort,
         size: this.limit,
-        from: this.limit * this.offset,
+        from,
         query: {
           filtered: {
             filter: {
@@ -48,17 +50,21 @@ export default class QueryBuilder {
       }
     })
   }
+
   addQueryString (boolType, fields, query) {
     this.bools[boolType].push({
       query_string: {fields, query}
     })
   }
+
   addMust (filterType, field, value) {
     this.add('must', filterType, field, value)
   }
+
   addMustTerm (field, value) {
     this.addMust('term', field, value)
   }
+
   addMustQueryString (fields, query) {
     this.addQueryString('must', fields, query)
   }
@@ -66,9 +72,11 @@ export default class QueryBuilder {
   addMustNot (filterType, field, value) {
     this.add('must_not', filterType, field, value)
   }
+
   addMustNotTerm (field, value) {
     this.addMustNot('term', field, value)
   }
+
   addMustNotQueryString (fields, query) {
     this.addQueryString('must_not', fields, query)
   }
@@ -76,29 +84,41 @@ export default class QueryBuilder {
   addShould (filterType, field, value) {
     this.add('should', filterType, field, value)
   }
+
   addShouldTerm (field, value) {
     this.addShould('term', field, value)
   }
+
   addShouldQueryString (fields, query) {
     this.addQueryString('must_not', fields, query)
   }
 
-  addAgg (type, name, field) {
-    this.aggs.push([name, {
+  addAgg (type, name, field, option) {
+    let agg = {
       [type]: {
         field
       }
-    }])
+    }
+    Object.assign(agg[type], option)
+    this.aggs.push([name, agg])
   }
-  addTermsAgg (name, field) {
-    this.addAgg('terms', name, field)
+
+  addTermsAgg (name, field, option) {
+    this.addAgg('terms', name, field, option)
   }
+
   setLimit (limit) {
     this.limit = limit
   }
+
   setOffset (offset) {
     this.offset = offset
   }
+
+  setPage (page) {
+    this.page = page
+  }
+
   setSort (field, order) {
     this.sort = [{
       [field]: {
@@ -106,6 +126,7 @@ export default class QueryBuilder {
       }
     }]
   }
+
   addSort (field, order) {
     this.sort.push({
       [field]: {
