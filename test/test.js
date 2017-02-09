@@ -8,7 +8,7 @@ describe('QueryBuilder', function () {
   qb.addMustQueryString(['title', 'desc'], '*hello*')
   qb.addTermsAgg('category_count', 'category_id', {size: 100})
   qb.setLimit(10)
-  qb.setOffset(0)
+  qb.setPage(0)
   qb.addSort('id', 'desc')
   let query = qb.build()
   it('it should generate query without error', function () {

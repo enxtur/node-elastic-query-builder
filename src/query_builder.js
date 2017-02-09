@@ -13,13 +13,12 @@ export default class QueryBuilder {
       should: this.should
     }
     this.limit = 10
-    this.offset = 0
     this.page = 0
     this.sort = []
   }
 
   build () {
-    let from = this.offset ? this.offset : (this.page * this.limit)
+    let from = this.page * this.limit
     return {
       index: this.index,
       type: this.type,
@@ -109,10 +108,6 @@ export default class QueryBuilder {
 
   setLimit (limit) {
     this.limit = limit
-  }
-
-  setOffset (offset) {
-    this.offset = offset
   }
 
   setPage (page) {
