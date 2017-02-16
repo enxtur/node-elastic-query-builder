@@ -45,7 +45,7 @@ export default class QueryBuilder {
   add (boolType, filterType, field, value) {
     // console.log('boolType', boolType)
     // console.log('this.bools[boolType]', this.bools[boolType])
-    console.log('##', this.bools, '##')
+    // console.log('##', this.bools, '##')
     this.bools[boolType].push({
       [filterType]: {
         [field]: value
