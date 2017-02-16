@@ -1,6 +1,6 @@
 {
   "name": "elastic-query-builder",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "Very simple search query builder for private purpose",
   "main": "lib/query_builder.js",
   "scripts": {
