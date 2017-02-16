@@ -3,15 +3,15 @@ export default class QueryBuilder {
   constructor (index, type) {
     this.index = index
     this.type = type
-    this.must = []
-    this.must_not = []
-    this.should = []
     this.aggs = []
     this.bools = {
-      must: this.must,
-      must_not: this.must_not,
-      should: this.should
+      must: [],
+      must_not: [],
+      should: []
     }
+    this.must = this.bools.must
+    this.must_not = this.bools.must_not
+    this.should = this.bools.should
     this.limit = 10
     this.page = 0
     this.sort = []
@@ -30,66 +30,80 @@ export default class QueryBuilder {
           filtered: {
             filter: {
               bool: {
-                must: this.must,
-                must_not: this.must_not,
-                should: this.should
+                must: Object.assign([], this.must),
+                must_not: Object.assign([], this.must_not),
+                should: Object.assign([], this.should)
               }
             }
           }
         },
-        aggs: object(this.aggs)
+        aggs: Object.assign({}, object(this.aggs))
       }
     }
   }
 
   add (boolType, filterType, field, value) {
+    // console.log('boolType', boolType)
+    // console.log('this.bools[boolType]', this.bools[boolType])
+    console.log('##', this.bools, '##')
     this.bools[boolType].push({
       [filterType]: {
         [field]: value
       }
     })
+    return this
   }
 
   addQueryString (boolType, fields, query) {
     this.bools[boolType].push({
       query_string: {fields, query}
     })
+    return this
   }
 
   addMust (filterType, field, value) {
     this.add('must', filterType, field, value)
+    return this
   }
 
   addMustTerm (field, value) {
     this.addMust('term', field, value)
+    return this
   }
 
   addMustQueryString (fields, query) {
     this.addQueryString('must', fields, query)
+    return this
   }
 
   addMustNot (filterType, field, value) {
     this.add('must_not', filterType, field, value)
+    return this
   }
 
   addMustNotTerm (field, value) {
     this.addMustNot('term', field, value)
+    return this
   }
 
   addMustNotQueryString (fields, query) {
     this.addQueryString('must_not', fields, query)
+    return this
   }
 
   addShould (filterType, field, value) {
     this.add('should', filterType, field, value)
+    return this
   }
 
   addShouldTerm (field, value) {
     this.addShould('term', field, value)
+    return this
   }
 
   addShouldQueryString (fields, query) {
     this.addQueryString('must_not', fields, query)
+    return this
   }
 
   addAgg (type, name, field, option) {
@@ -100,18 +114,22 @@ export default class QueryBuilder {
     }
     Object.assign(agg[type], option)
     this.aggs.push([name, agg])
+    return this
   }
 
   addTermsAgg (name, field, option) {
     this.addAgg('terms', name, field, option)
+    return this
   }
 
   setLimit (limit) {
     this.limit = limit
+    return this
   }
 
   setPage (page) {
     this.page = page
+    return this
   }
 
   setSort (field, order) {
@@ -120,6 +138,7 @@ export default class QueryBuilder {
         order
       }
     }]
+    return this
   }
 
   addSort (field, order) {
@@ -128,6 +147,7 @@ export default class QueryBuilder {
         order
       }
     })
+    return this
   }
 }
 

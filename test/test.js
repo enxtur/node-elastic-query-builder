@@ -2,16 +2,17 @@ import assert from 'assert'
 import QueryBuilder from '../src/query_builder'
 describe('QueryBuilder', function () {
   let qb = new QueryBuilder('myindex', 'mytype')
-  qb.addMustTerm('user_id', 1)
-  qb.addMustNotTerm('deleted', true)
-  qb.addShouldTerm('type', 'sample-type')
-  qb.addMustQueryString(['title', 'desc'], '*hello*')
-  qb.addTermsAgg('category_count', 'category_id', {size: 100})
-  qb.setLimit(10)
-  qb.setPage(0)
-  qb.addSort('id', 'desc')
+    .addShouldTerm('type', 'sample-type')
+    .addMustTerm('user_id', 1)
+    .addMustNotTerm('deleted', true)
+    .addMustQueryString(['title', 'desc'], '*hello*')
+    .addTermsAgg('category_count', 'category_id', {size: 100})
+    .setLimit(10)
+    .setPage(0)
+    .addSort('id', 'desc')
   let query = qb.build()
   it('it should generate query without error', function () {
+    // console.log(JSON.stringify(query))
     assert.doesNotThrow(() => {
       let {
         index,
