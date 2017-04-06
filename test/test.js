@@ -6,13 +6,17 @@ describe('QueryBuilder', function () {
     .addMustTerm('user_id', 1)
     .addMustNotTerm('deleted', true)
     .addMustQueryString(['title', 'desc'], '*hello*')
+    .addMustRange('price', {
+      gte: 10,
+      lte: 100
+    })
     .addTermsAgg('category_count', 'category_id', {size: 100})
     .setLimit(10)
     .setPage(0)
     .addSort('id', 'desc')
   let query = qb.build()
   it('it should generate query without error', function () {
-    // console.log(JSON.stringify(query))
+    console.log(JSON.stringify(query, false, 4))
     assert.doesNotThrow(() => {
       let {
         index,
@@ -34,6 +38,13 @@ describe('QueryBuilder', function () {
                   }, {
                     query_string: {
                       fields: [title, desc]
+                    }
+                  }, {
+                    range: {
+                      price: {
+                        gte,
+                        lte
+                      }
                     }
                   }],
                   must_not: [{
@@ -70,6 +81,8 @@ describe('QueryBuilder', function () {
       assert.equal(filterType, 'sample-type')
       assert.equal(field, 'category_id')
       assert.equal(size, 100)
+      assert.equal(gte, 10)
+      assert.equal(lte, 100)
     }, Error)
   })
 })

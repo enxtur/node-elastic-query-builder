@@ -71,6 +71,11 @@ export default class QueryBuilder {
     return this
   }
 
+  addMustRange (field, value) {
+    this.addMust('range', field, value)
+    return this
+  }
+
   addMustQueryString (fields, query) {
     this.addQueryString('must', fields, query)
     return this
@@ -83,6 +88,11 @@ export default class QueryBuilder {
 
   addMustNotTerm (field, value) {
     this.addMustNot('term', field, value)
+    return this
+  }
+
+  addMustNotRange (field, value) {
+    this.addMustNot('range', field, value)
     return this
   }
 
@@ -101,8 +111,13 @@ export default class QueryBuilder {
     return this
   }
 
+  addShouldRange (field, value) {
+    this.addShould('range', field, value)
+    return this
+  }
+
   addShouldQueryString (fields, query) {
-    this.addQueryString('must_not', fields, query)
+    this.addQueryString('should', fields, query)
     return this
   }
 
