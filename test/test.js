@@ -10,6 +10,12 @@ describe('QueryBuilder', function () {
       gte: 10,
       lte: 100
     })
+    .addMustBool({
+      must: [{
+        'comps.component_id': 1,
+        'comps.select_id': 1
+      }]
+    })
     .addTermsAgg('category_count', 'category_id', {size: 100})
     .setLimit(10)
     .setPage(0)

@@ -54,6 +54,11 @@ export default class QueryBuilder {
     return this
   }
 
+  addBool (boolType, bool) {
+    this.bools[boolType].push({bool})
+    return this
+  }
+
   addQueryString (boolType, fields, query) {
     this.bools[boolType].push({
       query_string: {fields, query}
@@ -81,6 +86,11 @@ export default class QueryBuilder {
     return this
   }
 
+  addMustBool (bool) {
+    this.addBool('must', bool)
+    return this
+  }
+
   addMustNot (filterType, field, value) {
     this.add('must_not', filterType, field, value)
     return this
@@ -101,6 +111,11 @@ export default class QueryBuilder {
     return this
   }
 
+  addMustNotBool (bool) {
+    this.addBool('must_not', bool)
+    return this
+  }
+
   addShould (filterType, field, value) {
     this.add('should', filterType, field, value)
     return this
@@ -118,6 +133,11 @@ export default class QueryBuilder {
 
   addShouldQueryString (fields, query) {
     this.addQueryString('should', fields, query)
+    return this
+  }
+
+  addShouldBool (bool) {
+    this.addBool('should', bool)
     return this
   }
 
