@@ -12,8 +12,13 @@ describe('QueryBuilder', function () {
     })
     .addMustBool({
       must: [{
-        'comps.component_id': 1,
-        'comps.select_id': 1
+        term: {
+          'comps.component_id': 1,
+        }
+      }, {
+        term: {
+          'comps.select_id': 1
+        }
       }]
     })
     .addTermsAgg('category_count', 'category_id', {size: 100})
